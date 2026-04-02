@@ -1,20 +1,22 @@
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import org.testng.annotations.Test;
+import static io.restassured.RestAssured.*;
 
-public class APITest {
+public class APITest extends BaseTest {
 
-    public static void main(String[] args) {
+    @Test
+    public void getUsers() {
 
-        RestAssured.baseURI = "https://jsonplaceholder.typicode.com";
+        Response response = given()
+                .when()
+                .get("/users");
 
-        Response response = RestAssured.get("/users");
-
-        System.out.println("Response Body: " + response.getBody().asString());
+        System.out.println(response.getBody().asString());
 
         if (response.getStatusCode() == 200) {
-            System.out.println("Status Code Validation PASSED");
+            System.out.println("Test Passed");
         } else {
-            System.out.println("Status Code Validation FAILED");
+            System.out.println("Test Failed");
         }
     }
 }
